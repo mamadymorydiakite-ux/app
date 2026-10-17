@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Link — Android</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23DD5B35'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M13.5 18.5a4.4 4.4 0 0 0 6.2 0l3-3a4.4 4.4 0 0 0-6.2-6.2l-1.4 1.4'/%3E%3Cpath d='M18.5 13.5a4.4 4.4 0 0 0-6.2 0l-3 3a4.4 4.4 0 0 0 6.2 6.2l1.4-1.4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/mobile.css">
+</head>
+<body class="mobile">
+<div class="phone" id="phone">
+
+  <!-- ===== Status bar ===== -->
+  <div class="statusbar" id="statusbar">
+    <div class="sb-left">
+      <span class="local-chip" id="localChip" hidden><span class="dot"></span>LOCAL</span>
+      <span>9:41</span>
+    </div>
+    <div class="sb-right">
+      <span data-icon="wifi" data-size="15"></span>
+      <svg viewBox="0 0 20 12" width="17" height="11" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="4.4" y="6" width="3" height="6" rx="1" fill="currentColor"/><rect x="8.8" y="3.6" width="3" height="8.4" rx="1" fill="currentColor"/><rect x="13.2" y="1.2" width="3" height="10.8" rx="1" fill="currentColor" opacity=".35"/></svg>
+      <span>84%</span>
+      <svg viewBox="0 0 26 13" width="24" height="12" aria-hidden="true"><rect x="0.6" y="0.6" width="21" height="11.8" rx="3.4" fill="none" stroke="currentColor" stroke-opacity=".45"/><rect x="2.6" y="2.6" width="15" height="7.8" rx="2" fill="currentColor"/><path d="M23.6 4.4v4.2a2.3 2.3 0 0 0 0-4.2z" fill="currentColor" fill-opacity=".5"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== Scrollable content ===== -->
+  <main class="content" id="content">
+
+    <!-- ---------- 1. Home (before connection) ---------- -->
+    <section class="screen" id="s-home">
+      <div class="brand"><span class="logo" data-icon="link"></span><span class="word">Link</span></div>
+      <div class="hero">
+        <div class="kicker">Offline-First pairing</div>
+        <h1>Connect to your PC</h1>
+        <p>Open Link on your computer and scan the QR code to easily link devices over local Wi-Fi.</p>
+      </div>
+      <button class="btn btn-primary btn-lg btn-block" data-go="scan" data-icon="qr" style="gap:10px">Scan QR Code</button>
+      <div class="sep-label" style="margin:24px 0 12px">OR ENTER IP MANUALLY</div>
+      <div class="ip-form">
+        <label class="field"><span data-icon="globe"></span><input id="ipInput" type="text" inputmode="decimal" placeholder="192.168.1.42" value="192.168.1.42"></label>
+        <button class="btn btn-dark" id="btnIpConnect">Connect</button>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:16px">
+        <span class="pill-info" id="findPc"><span class="dot"></span>Looking for PC on network...</span>
+      </div>
+      <div class="local-note"><span data-icon="shield"></span>No internet required. Paired locally.</div>
+      <div class="card flat" style="margin-top:18px;display:flex;gap:12px;align-items:flex-start">
+        <span class="icon-badge sm neutral" data-icon="info"></span>
+        <div class="small muted">Link works fully offline. Nothing is uploaded, no account is created and no cloud service is contacted.</div>
+      </div>
+    </section>
+
+    <!-- ---------- 2. QR Scanner (dark) ---------- -->
+    <section class="screen dark" id="s-scan">
+      <div class="scan-head">
+        <div><div class="title">Pair Device</div></div>
+        <button class="iconbtn-dark" data-go="home" aria-label="Close"><span data-icon="x"></span></button>
+      </div>
+      <div style="text-align:center;color:#C6BDB2;font-size:14px;font-weight:600;margin-bottom:6px">Scan Desktop QR</div>
+      <div class="qr-frame">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <span class="scanline"></span>
+        <span class="ghost-qr" data-icon="qr" data-size="150"></span>
+      </div>
+      <div class="scan-help">Point the camera at the QR code displayed on your computer.<br>Both devices must be on the same Wi-Fi network.</div>
+      <div class="scan-actions">
+        <button class="btn btn-dark-ghost btn-block" data-go="home" data-icon="hash" style="gap:9px">Use IP Address</button>
+        <div class="tiny center" style="color:#7E766C">Camera is scanning — the desktop code will be detected automatically.</div>
+      </div>
+      <div class="scan-kicker" style="margin-top:22px">PAIRING VIA WI-FI DIRECT</div>
+    </section>
+
+    <!-- ---------- 3. Connecting ---------- -->
+    <section class="screen" id="s-connecting">
+      <div class="center-pane">
+        <div class="spinner-ring"><span data-icon="refresh"></span></div>
+        <div class="m-head" style="margin:6px 0 0">
+          <div class="title">Connecting to Desktop-PC...</div>
+        </div>
+        <div class="mono small" style="color:var(--muted)">IP Address: 192.168.1.42</div>
+        <p class="muted small" style="max-width:270px">Ensure both devices are on the same Wi-Fi network.</p>
+        <div class="card tight" style="width:100%;max-width:300px;margin-top:6px;text-align:left">
+          <div class="row small" style="padding:5px 0"><span class="icon-badge sm ok" data-icon="check" style="width:24px;height:24px;border-radius:8px"></span><span class="grow">Desktop-PC discovered</span></div>
+          <div class="row small" style="padding:5px 0"><span class="icon-badge sm ok" data-icon="check" style="width:24px;height:24px;border-radius:8px"></span><span class="grow">Local handshake verified</span></div>
+          <div class="row small" style="padding:5px 0"><span class="icon-badge sm neutral" style="width:24px;height:24px;border-radius:8px"><span class="spin" data-icon="refresh" data-size="14"></span></span><span class="grow muted">Opening secure channel…</span></div>
+        </div>
+        <button class="btn btn-secondary btn-block" style="max-width:300px;margin-top:8px" data-go="home">Cancel Connection</button>
+      </div>
+    </section>
+
+    <!-- ---------- 4. Connection error ---------- -->
+    <section class="screen" id="s-error">
+      <div class="center-pane">
+        <div class="err-orb"><span data-icon="alert"></span></div>
+        <div class="title">Connection Failed</div>
+        <p class="muted small" style="max-width:280px">We couldn't reach Desktop-PC at <b class="mono">192.168.1.42</b>. Check that both devices are on the same Wi-Fi network and that Link is still open on your computer.</p>
+        <span class="badge badge-err"><span class="dot"></span>Error 1004 · Host unreachable</span>
+        <button class="btn btn-primary btn-block" style="max-width:300px;margin-top:6px" data-go="connecting">Retry Connection</button>
+        <button class="link" data-go="scan">Scan QR Code Instead</button>
+      </div>
+    </section>
+
+    <!-- ---------- 5. Dashboard (connected) ---------- -->
+    <section class="screen" id="s-dashboard">
+      <div class="m-head">
+        <div class="kicker upper" style="color:var(--accent);font-size:11px;font-weight:750">Connected via Wi-Fi Direct</div>
+        <div class="title" style="margin-top:4px">Desktop-PC</div>
+      </div>
+      <div class="card device-card">
+        <span class="icon-badge lg" data-icon="laptop"></span>
+        <div class="grow">
+          <div class="row gap-8" style="align-items:center">
+            <span class="bold">Desktop-PC</span>
+          </div>
+          <div class="row gap-6 tiny ok-text" style="font-weight:650;margin-top:3px"><span style="width:7px;height:7px;border-radius:50%;background:var(--ok);display:inline-block"></span>Connected Seamlessly</div>
+          <div class="tiny muted mono" style="margin-top:3px">192.168.1.42 · Wi-Fi</div>
+        </div>
+        <button class="btn btn-soft-danger btn-sm" id="btnStop">Stop</button>
+      </div>
+
+      <div class="dash-grid">
+        <button class="tile" data-go="files"><span class="icon-badge" data-icon="folder"></span><span class="t-name">Send Files</span><span class="t-meta">Phone → PC</span></button>
+        <button class="tile" data-go="clipboard"><span class="icon-badge" data-icon="clipboard"></span><span class="t-name">Clipboard</span><span class="badge badge-ok" style="margin-top:-2px"><span class="dot"></span>Active</span></button>
+        <button class="tile" data-go="keyboard"><span class="icon-badge" data-icon="keyboard"></span><span class="t-name">Keyboard</span><span class="t-meta">Remote input</span></button>
+        <button class="tile" data-go="touchpad"><span class="icon-badge" data-icon="pointer"></span><span class="t-name">Touchpad</span><span class="t-meta">Mouse control</span></button>
+        <button class="tile" data-go="ring"><span class="icon-badge" data-icon="bell"></span><span class="t-name">Ring Phone</span><span class="t-meta">Find my device</span></button>
+        <button class="tile" data-go="devices"><span class="icon-badge" data-icon="laptop"></span><span class="t-name">Connection</span><span class="t-meta mono">192.168.1.42 · Wi-Fi</span></button>
+        <button class="tile span2" data-go="screencast" style="flex-direction:row;align-items:center;gap:14px">
+          <span class="icon-badge" data-icon="cast"></span>
+          <span class="grow col" style="gap:3px"><span class="t-name">Screen Share</span><span class="t-meta">Mirror your phone to the PC</span></span>
+          <span class="badge badge-accent">New</span>
+        </button>
+      </div>
+
+      <div class="speed-strip">
+        <div class="row gap-10"><span class="icon-badge sm neutral" data-icon="zap"></span><div><div class="tiny upper faint bold">Direct Local Speed</div><div class="val">340 Mbps</div></div></div>
+        <span class="badge badge-ok"><span class="dot"></span>Local</span>
+      </div>
+    </section>
+
+    <!-- ---------- 6. Send files ---------- -->
+    <section class="screen" id="s-files">
+      <div class="m-head">
+        <div class="title">Send Files</div>
+        <div class="subtitle">Phone → Desktop-PC · stays on your Wi-Fi</div>
+      </div>
+      <div class="dashed" id="dropZone" style="min-height:150px">
+        <span class="icon-badge lg" data-icon="folder" style="background:#fff"></span>
+        <div class="bold">Select files to send</div>
+        <div class="small" style="max-width:230px;color:#A9755A">Share photos, videos or files instantly</div>
+      </div>
+      <div class="card-head" style="margin:20px 0 12px">
+        <div class="card-title">Recent Transfers</div>
+        <button class="link" data-go="transfer">View queue</button>
+      </div>
+      <div class="list" id="recentTransfers"></div>
+    </section>
+
+    <!-- ---------- 7. File transfer (progress) ---------- -->
+    <section class="screen" id="s-transfer">
+      <button class="m-back" data-go="files"><span data-icon="chevronLeft"></span>Files</button>
+      <div class="m-head">
+        <div class="row between"><div class="title">Sending to Desktop-PC</div><span class="badge badge-accent"><span class="dot"></span>Local</span></div>
+        <div class="subtitle">Over Wi-Fi · 192.168.1.42</div>
+      </div>
+      <div class="progress-row">
+        <div class="row gap-12">
+          <span class="file-glyph" data-icon="file"></span>
+          <div class="grow">
+            <div class="row between"><span class="bold truncate">presentation.pdf</span><span class="bold small" id="tpPct">73%</span></div>
+            <div class="meta muted small">24.5 MB • 73% Completed</div>
+          </div>
+        </div>
+        <div class="bar"><i id="tpBar" style="width:73%"></i></div>
+        <div class="row between tiny muted"><span id="tpSpeed">2.4 MB/s</span><span id="tpEta">3 seconds remaining</span></div>
+      </div>
+      <button class="btn btn-soft-danger btn-block" style="margin-top:14px" id="btnCancelTransfer">Cancel Transfer</button>
+      <div class="card-head" style="margin:22px 0 12px">
+        <div class="card-title">Queue <span class="muted small" id="queueCount">(2 files remaining)</span></div>
+        <button class="link" id="btnClearQueue">Clear All</button>
+      </div>
+      <div class="list" id="queueList"></div>
+    </section>
+
+    <!-- ---------- 8. Clipboard ---------- -->
+    <section class="screen" id="s-clipboard">
+      <div class="m-head">
+        <div class="row between" style="align-items:flex-start">
+          <div><div class="title">Clipboard Sync</div><div class="subtitle">Shared text, never leaves your network</div></div>
+          <span class="badge badge-ok"><span class="dot"></span>Synced locally</span>
+        </div>
+      </div>
+      <div class="tabs" id="clipTabs" style="margin-bottom:14px">
+        <button class="tab active" data-clip="phone">Phone Clipboard</button>
+        <button class="tab" data-clip="pc">PC Clipboard</button>
+      </div>
+      <div class="list" id="clipList"></div>
+    </section>
+
+    <!-- ---------- 9. Tools hub ---------- -->
+    <section class="screen" id="s-tools">
+      <div class="m-head">
+        <div class="title">Tools</div>
+        <div class="subtitle">Control your PC from this phone</div>
+      </div>
+      <div class="dash-grid">
+        <button class="tile" data-go="keyboard"><span class="icon-badge" data-icon="keyboard"></span><span class="t-name">Keyboard</span><span class="t-meta">Type on the PC</span></button>
+        <button class="tile" data-go="touchpad"><span class="icon-badge" data-icon="pointer"></span><span class="t-name">Touchpad</span><span class="t-meta">Move the cursor</span></button>
+        <button class="tile" data-go="ring"><span class="icon-badge" data-icon="bell"></span><span class="t-name">Ring Phone</span><span class="t-meta">Find my device</span></button>
+        <button class="tile" data-go="devices"><span class="icon-badge" data-icon="users"></span><span class="t-name">Devices</span><span class="t-meta">1 connected</span></button>
+        <button class="tile span2" data-go="screencast" style="flex-direction:row;align-items:center;gap:14px">
+          <span class="icon-badge" data-icon="cast"></span>
+          <span class="grow col" style="gap:3px"><span class="t-name">Screen Share</span><span class="t-meta">Mirror your phone screen to Desktop-PC</span></span>
+          <span class="badge badge-accent">New</span>
+        </button>
+      </div>
+      <div class="card flat" style="margin-top:16px;display:flex;gap:12px;align-items:center">
+        <span class="icon-badge sm neutral" data-icon="lock"></span>
+        <div class="small muted grow">All tool traffic is exchanged directly with your computer over the local network.</div>
+      </div>
+    </section>
+
+    <!-- ---------- 10. Remote keyboard ---------- -->
+    <section class="screen" id="s-keyboard">
+      <button class="m-back" data-go="tools"><span data-icon="chevronLeft"></span>Tools</button>
+      <div class="m-head">
+        <div class="row between"><div class="title">Remote Input</div><span class="badge badge-ok"><span class="dot"></span>Live</span></div>
+        <div class="subtitle">Typing into Desktop-PC</div>
+      </div>
+      <textarea class="type-area" id="typeArea" placeholder="Start typing here..."></textarea>
+      <p class="muted small" style="margin-top:12px">Every character typed in this field will instantly appear on your connected computer.</p>
+      <div class="keycap-strip" id="keyStrip"></div>
+      <div class="card" style="margin-top:18px;padding:0">
+        <div class="set-row"><div class="grow"><div class="s-label">Show on-screen keyboard</div><div class="s-desc">Use the Android keyboard to type</div></div><button class="switch" role="switch" aria-checked="true" aria-label="Show on-screen keyboard"></button></div>
+      </div>
+      <div class="row gap-10" style="margin-top:14px">
+        <button class="btn btn-primary grow" id="btnActivateTyping" data-icon="keyboard" style="gap:9px">Activate Typing</button>
+        <button class="btn btn-secondary" id="btnClearText">Clear Text</button>
+      </div>
+    </section>
+
+    <!-- ---------- 11. Mouse & trackpad ---------- -->
+    <section class="screen" id="s-touchpad">
+      <button class="m-back" data-go="tools"><span data-icon="chevronLeft"></span>Tools</button>
+      <div class="m-head">
+        <div class="row between"><div class="title">Mouse &amp; Trackpad</div><span class="badge badge-ok"><span class="dot"></span>1.8 ms</span></div>
+      </div>
+      <div class="touchpad" id="touchpad">
+        <span class="tp-cursor" id="tpCursor" data-icon="pointer"></span>
+        <div class="tp-hint">Swipe to move cursor<br>Two fingers to scroll • Tap to click</div>
+      </div>
+      <div class="tp-stats">
+        <div class="stat-chip"><div class="k">Latency</div><div class="v">1.8 ms</div></div>
+        <div class="stat-chip"><div class="k">Gesture</div><div class="v" id="tpGesture">Idle</div></div>
+      </div>
+      <div class="row gap-10" style="margin-top:14px">
+        <button class="btn btn-primary grow" data-click="left">Left Click</button>
+        <button class="btn btn-secondary grow" data-click="right">Right Click</button>
+      </div>
+      <div class="card" style="margin-top:14px;padding:0">
+        <div class="set-row"><div class="grow"><div class="s-label">Drag Lock</div><div class="s-desc">Keep holding while moving the cursor</div></div><button class="switch" role="switch" aria-checked="false" aria-label="Drag Lock"></button></div>
+      </div>
+    </section>
+
+    <!-- ---------- 12. Ring phone ---------- -->
+    <section class="screen" id="s-ring">
+      <button class="m-back" data-go="tools"><span data-icon="chevronLeft"></span>Tools</button>
+      <div class="m-head">
+        <div class="row between"><div class="title">Ring Phone</div><span class="badge badge-warn"><span class="dot"></span>Find my device</span></div>
+      </div>
+      <div class="ring-visual">
+        <span class="ring-wave"></span><span class="ring-wave w2"></span><span class="ring-wave w3"></span>
+        <span class="ring-core" id="ringCore" data-icon="bell"></span>
+      </div>
+      <div class="center col gap-4" style="align-items:center;margin-bottom:16px">
+        <div class="title" style="font-size:20px">Ringing Connected PC</div>
+        <div class="muted small" id="ringStatus">Playing a loud alert sound on Desktop-PC</div>
+      </div>
+      <div class="card" style="padding:16px">
+        <div class="row between tiny upper faint bold" style="margin-bottom:10px"><span>Alert volume</span><span id="ringVolLabel">85%</span></div>
+        <input class="slider" id="ringVol" type="range" min="0" max="100" value="85" aria-label="Alert volume">
+        <div class="row between tiny muted" style="margin-top:8px"><span>Plays even in silent mode</span><span>Do Not Disturb bypass</span></div>
+      </div>
+      <button class="btn btn-danger btn-block" style="margin-top:14px" id="btnStopAlert" data-icon="stop" data-size="18">Stop Alert</button>
+    </section>
+
+    <!-- ---------- 13. Connected devices ---------- -->
+    <section class="screen" id="s-devices">
+      <button class="m-back" data-go="tools"><span data-icon="chevronLeft"></span>Tools</button>
+      <div class="m-head">
+        <div class="title">Connected Devices</div>
+        <div class="subtitle">1 device on this Wi-Fi network</div>
+      </div>
+      <div class="card" style="padding:16px">
+        <div class="row gap-12">
+          <span class="icon-badge lg" data-icon="laptop"></span>
+          <div class="grow">
+            <div class="row between"><span class="bold">Desktop-PC</span><span class="badge badge-ok"><span class="dot"></span>Active</span></div>
+            <div class="tiny muted mono" style="margin-top:3px">192.168.1.42 · Wi-Fi Direct</div>
+          </div>
+        </div>
+        <div class="tp-stats" style="grid-template-columns:1fr 1fr 1fr;margin-top:14px">
+          <div class="stat-chip"><div class="k">Duration</div><div class="v">2h 34m</div></div>
+          <div class="stat-chip"><div class="k">Transferred</div><div class="v">156 MB</div></div>
+          <div class="stat-chip"><div class="k">Speed</div><div class="v">340 Mbps</div></div>
+        </div>
+        <button class="btn btn-soft-danger btn-block" style="margin-top:14px" id="btnDisconnectDevice">Disconnect Device</button>
+      </div>
+      <div class="card-head" style="margin:22px 0 12px"><div class="card-title">Connection History</div></div>
+      <div class="list" id="historyList"></div>
+    </section>
+
+    <!-- ---------- 14. Screen share (new) ---------- -->
+    <section class="screen" id="s-screencast">
+      <button class="m-back" data-go="tools"><span data-icon="chevronLeft"></span>Tools</button>
+      <div class="m-head">
+        <div class="row between"><div class="title">Screen Share</div><span class="badge badge-accent">New</span></div>
+        <div class="subtitle">Mirror your phone screen to Desktop-PC</div>
+      </div>
+
+      <div id="ssIdle" class="col gap-16" style="align-items:center;text-align:center">
+        <span class="icon-badge xl" data-icon="cast" style="margin-top:10px"></span>
+        <div class="bold" style="font-size:17px">Share this screen with your computer</div>
+        <p class="muted small" style="max-width:290px">Your screen will be visible only on your local network. Nothing leaves your Wi-Fi.</p>
+        <button class="btn btn-primary btn-lg btn-block" id="btnStartShare" data-icon="play" data-size="18" style="gap:9px">Start Sharing</button>
+        <div class="row gap-8 tiny muted" style="justify-content:center"><span data-icon="info" data-size="14"></span>Android will ask for permission to capture your screen</div>
+      </div>
+
+      <div id="ssActive" hidden class="col gap-14">
+        <div class="live-preview">
+          <span class="badge badge-live live-badge"><span class="dot"></span>Live</span>
+          <div class="preview-ui">
+            <div class="row between"><span>9:41</span><span>Link</span></div>
+            <div class="preview-card" style="margin-top:6px"></div>
+            <div class="preview-card"></div>
+            <div class="row gap-8" style="margin-top:auto"><span class="preview-card grow" style="height:30px"></span><span class="preview-card grow" style="height:30px"></span></div>
+            <div class="bar thin"><i style="width:62%"></i></div>
+          </div>
+          <div class="live-meta">
+            <div class="row between"><span>Sharing to Desktop-PC</span><span id="ssElapsed">00:00</span></div>
+          </div>
+        </div>
+        <div class="tp-stats">
+          <div class="stat-chip"><div class="k">Latency</div><div class="v" id="ssLatency">38 ms</div></div>
+          <div class="stat-chip"><div class="k">Frame rate</div><div class="v" id="ssFps">30 fps</div></div>
+        </div>
+        <div>
+          <div class="tiny upper faint bold" style="margin:2px 0 8px">Stream quality</div>
+          <div class="seg" id="ssQuality">
+            <button data-q="Low">Low</button>
+            <button data-q="Balanced" class="active">Balanced</button>
+            <button data-q="High">High</button>
+          </div>
+        </div>
+        <div class="notif"><span class="n-icon" data-icon="cast"></span><div class="grow">Link is sharing your screen<span class="tiny" style="display:block;opacity:.7">Tap to stop · persistent notification</span></div></div>
+        <button class="btn btn-danger btn-block" id="btnStopShare" data-icon="stop" data-size="18" style="gap:9px">Stop Sharing</button>
+        <div class="tiny muted center">Screen data is streamed peer-to-peer over your local Wi-Fi only.</div>
+      </div>
+    </section>
+
+    <!-- ---------- 15. Settings ---------- -->
+    <section class="screen" id="s-settings">
+      <div class="m-head">
+        <div class="title">Settings</div>
+        <div class="subtitle">Link 1.0.0 · Offline first</div>
+      </div>
+      <div id="settingsGroups"></div>
+    </section>
+
+  </main>
+
+  <!-- ===== Bottom navigation ===== -->
+  <nav class="tabbar" id="tabbar">
+    <button class="tabitem active" data-tab="home"><span data-icon="home"></span><span>Home</span></button>
+    <button class="tabitem" data-tab="files"><span data-icon="folder"></span><span>Files</span></button>
+    <button class="tabitem" data-tab="clipboard"><span data-icon="clipboard"></span><span>Clipboard</span></button>
+    <button class="tabitem" data-tab="tools"><span data-icon="grid"></span><span>Tools</span></button>
+    <button class="tabitem" data-tab="settings"><span data-icon="gear"></span><span>Settings</span></button>
+  </nav>
+  <div class="home-indicator"></div>
+
+  <!-- ===== Simulated Android permission dialog ===== -->
+  <div class="sys-modal-back" id="permModal">
+    <div class="sys-modal" role="dialog" aria-modal="true" aria-label="Screen capture permission">
+      <div class="row gap-12" style="align-items:center">
+        <span class="icon-badge" data-icon="cast"></span>
+        <div class="sm-title">Start recording or casting with Link?</div>
+      </div>
+      <div class="sm-body">Link will capture everything on your screen, including passwords and other sensitive information. Your screen content is sent only to Desktop-PC over the local Wi-Fi network.</div>
+      <div class="sm-actions">
+        <button id="permCancel">Cancel</button>
+        <button id="permStart">Start now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/mobile.js"></script>
+</body>
+</html>

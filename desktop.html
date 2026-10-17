@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Link — Desktop</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23DD5B35'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M13.5 18.5a4.4 4.4 0 0 0 6.2 0l3-3a4.4 4.4 0 0 0-6.2-6.2l-1.4 1.4'/%3E%3Cpath d='M18.5 13.5a4.4 4.4 0 0 0-6.2 0l-3 3a4.4 4.4 0 0 0 6.2 6.2l1.4-1.4'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/desktop.css">
+</head>
+<body class="desktop">
+<div class="win" id="win" data-status="disconnected" data-screen="overview">
+
+  <!-- ===== Title bar ===== -->
+  <header class="titlebar">
+    <div class="lights"><i class="r"></i><i class="y"></i><i class="g"></i></div>
+    <div class="tb-title"><span id="tbCrumb">Overview</span><span class="crumb">· Link</span></div>
+    <div class="tb-right">
+      <span class="tb-badge"><span class="dot"></span><span id="tbDeviceText">Offline Mode</span></span>
+      <div class="tb-actions">
+        <button class="tb-icon" data-icon="search" title="Search devices"></button>
+        <button class="tb-icon" data-dscreen="settings" data-icon="gear" title="Settings"></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="win-body">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="side-brand"><span class="logo" data-icon="link"></span><span class="word">Link</span></div>
+      <nav class="side-nav">
+        <button class="nav-item active" data-dscreen="overview"><span data-icon="monitor"></span>Overview</button>
+        <button class="nav-item" data-dscreen="files"><span data-icon="folder"></span>Files</button>
+        <button class="nav-item" data-dscreen="clipboard"><span data-icon="clipboard"></span>Clipboard</button>
+        <button class="nav-item" data-dscreen="keyboard"><span data-icon="keyboard"></span>Keyboard</button>
+        <button class="nav-item" data-dscreen="mouse"><span data-icon="pointer"></span>Mouse</button>
+        <button class="nav-item" data-dscreen="screen"><span data-icon="cast"></span>Screen<span class="count">New</span></button>
+        <button class="nav-item" data-dscreen="ring"><span data-icon="bell"></span>Ring Phone</button>
+        <button class="nav-item" data-dscreen="settings"><span data-icon="gear"></span>Settings</button>
+      </nav>
+      <div class="side-foot">
+        <button class="btn btn-block" style="background:var(--pink-bg);color:var(--pink)" id="btnDisconnect" data-icon="unlink" data-size="17">Disconnect</button>
+        <div class="side-note"><span data-icon="shield"></span>Local Connection Only</div>
+      </div>
+    </aside>
+
+    <!-- ===== Main ===== -->
+    <main class="main">
+      <div class="main-scroll" id="mainScroll">
+
+        <!-- ---------- Overview ---------- -->
+        <section class="d-screen active" id="d-overview">
+          <!-- ready -->
+          <div class="ov-state ov-ready">
+            <div class="d-head">
+              <div class="eyebrow">Overview</div>
+              <div class="title">Connect your phone</div>
+              <div class="subtitle">Open Link on your Android device and scan the QR code to pair over local Wi-Fi.</div>
+            </div>
+            <div class="panel pad-lg">
+              <div class="qr-card">
+                <div class="qr-box">
+                  <svg id="qrSvg" viewBox="0 0 29 29" shape-rendering="crispEdges"></svg>
+                  <span class="qr-tag">Scan with the Link app</span>
+                </div>
+                <div class="qr-side">
+                  <div class="row gap-10"><span class="icon-badge lg" data-icon="qr"></span>
+                    <div><div class="panel-title">Waiting for device...</div><div class="small muted">No account, no cloud — pairing happens on this network.</div></div>
+                  </div>
+                  <div class="ip-chip"><span class="tiny upper faint bold">Local IP</span><span class="mono">192.168.1.42</span><button id="btnCopyIp" data-icon="copy" title="Copy address"></button></div>
+                  <button class="link" style="text-align:left" data-action="ip-manual">Connect with IP Address instead</button>
+                  <div class="row gap-8 tiny muted"><span data-icon="info" data-size="15"></span>Works with no internet access. The QR code refreshes every 60 seconds.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- connecting -->
+          <div class="ov-state ov-connecting">
+            <div class="d-head"><div class="eyebrow">Overview</div><div class="title">Connecting to Pixel 8 Pro</div>
+              <div class="subtitle">Confirming safe pairing sequence over your local Wi-Fi router.</div></div>
+            <div class="panel pad-lg center" style="display:flex;flex-direction:column;align-items:center;gap:18px">
+              <div class="spinner-ring"><span data-icon="refresh"></span></div>
+              <div class="ip-chip"><span class="tiny upper faint bold">IP</span><span class="mono">192.168.1.42</span></div>
+              <div class="row gap-12">
+                <span class="badge badge-ok"><span class="dot"></span>Phone found</span>
+                <span class="badge badge-warn"><span class="dot"></span>Handshake</span>
+              </div>
+              <button class="btn btn-secondary" data-dscreen="overview" data-action="cancel">Cancel Connection</button>
+            </div>
+          </div>
+
+          <!-- failed -->
+          <div class="ov-state ov-failed">
+            <div class="d-head"><div class="eyebrow">Overview</div><div class="title">Connection Failed</div>
+              <div class="subtitle">The pairing handshake with Pixel 8 Pro did not complete. Both devices must stay on the same network.</div></div>
+            <div class="panel pad-lg" style="display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center">
+              <div class="err-orb"><span data-icon="x"></span></div>
+              <div class="muted small" style="max-width:460px">No response from <b class="mono">192.168.1.42</b> on port <b class="mono">8080</b>. Check that the phone is still connected to the same Wi-Fi and that the Link app is open.</div>
+              <span class="badge badge-err"><span class="dot"></span>Error 1004 · Host unreachable</span>
+              <div class="row gap-10"><button class="btn btn-primary" data-action="retry">Try Again</button>
+              <button class="btn btn-secondary" data-action="troubleshoot">Troubleshoot network issues</button></div>
+            </div>
+          </div>
+
+          <!-- connected -->
+          <div class="ov-state ov-connected">
+            <div class="d-head">
+              <div class="row between" style="align-items:flex-start;gap:16px">
+                <div>
+                  <div class="eyebrow">Overview</div>
+                  <div class="title">Welcome back to Pixel 8 Pro</div>
+                  <div class="subtitle">Connected seamlessly over local network. No cellular data is being used.</div>
+                </div>
+                <span class="badge badge-ok" style="padding:8px 14px"><span class="dot"></span>Wi-Fi Direct</span>
+              </div>
+            </div>
+            <div class="panel" style="padding:18px">
+              <div class="row gap-14">
+                <span class="icon-badge lg" data-icon="phone"></span>
+                <div class="grow"><div class="panel-title">Pixel 8 Pro</div><div class="small muted mono">192.168.1.42 · port 8080 · TLS local</div></div>
+                <span class="badge badge-ok"><span class="dot"></span>Active</span>
+              </div>
+              <div class="stat-grid">
+                <div class="stat-box"><div class="k">Session Time</div><div class="v">01h 14m</div><div class="d">Started 14:02 local time</div></div>
+                <div class="stat-box"><div class="k">Local Speed</div><div class="v ok">340 Mbps</div><div class="d">Direct peer-to-peer link</div></div>
+                <div class="stat-box"><div class="k">Transferred</div><div class="v">1.4 GB</div><div class="d">42 files this session</div></div>
+              </div>
+            </div>
+            <div class="panel" style="margin-top:18px;padding:18px">
+              <div class="card-head"><div class="panel-title">Connected phones <span class="muted small">(2)</span></div>
+                <span class="pill-info ok"><span class="dot"></span>All on this Wi-Fi</span></div>
+              <div class="list-rows" id="desktopDevices"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- Files ---------- -->
+        <section class="d-screen" id="d-files">
+          <div class="d-head">
+            <div class="row between" style="align-items:flex-start;gap:16px">
+              <div><div class="eyebrow">Files</div><div class="title">Transfer files</div>
+                <div class="subtitle">Exchange files between your phone and this computer over the local network.</div></div>
+              <span class="pill-info ok"><span class="dot"></span>Direct local transfer · 340 Mbps</span>
+            </div>
+          </div>
+          <div class="cols-3">
+            <div class="pane">
+              <div class="pane-head"><div class="p-title">Phone (Pixel 8 Pro)</div><span class="badge badge-ok"><span class="dot"></span>Active</span></div>
+              <div class="pane-body" id="phoneFiles"></div>
+            </div>
+            <div class="drop-col">
+              <div class="drop-zone" id="dropZone">
+                <span class="icon-badge lg" data-icon="upload" style="background:#fff"></span>
+                <div class="bold small">Drag files here to send instantly</div>
+                <div class="tiny" style="color:#A9755A">or click to browse</div>
+              </div>
+              <button class="btn btn-primary btn-block" id="btnSendFiles" data-icon="send" data-size="17">Send 3 selected files</button>
+              <div class="tiny muted center">Nothing is uploaded to the internet</div>
+            </div>
+            <div class="pane">
+              <div class="pane-head"><div class="p-title">Computer (Local)</div><span class="badge badge-neutral"><span class="dot"></span>This device</span></div>
+              <div class="pane-body" id="computerFiles"></div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:22px;padding:18px">
+            <div class="card-head"><div class="panel-title">Recent Transfers</div>
+              <div class="row gap-10"><button class="btn btn-secondary btn-sm" data-dscreen="transferComplete">Simulate completion</button>
+              <button class="link" data-action="clear-transfers">Clear</button></div></div>
+            <div class="list-rows" id="desktopTransfers"></div>
+          </div>
+        </section>
+
+        <!-- ---------- File transfer complete ---------- -->
+        <section class="d-screen" id="d-transferComplete">
+          <div class="panel pad-lg" style="text-align:center;display:flex;flex-direction:column;gap:18px;align-items:center">
+            <div class="done-orb"><span data-icon="check"></span></div>
+            <div><div class="title">Transfer Complete</div>
+              <div class="subtitle" style="margin-top:6px">3 files sent successfully • Total size: 14.2 MB</div></div>
+            <span class="badge badge-ok"><span class="dot"></span>Saved to C:\\Users\\You\\Link</span>
+            <div class="list-rows" id="doneList" style="width:100%;max-width:520px;text-align:left"></div>
+            <div class="row gap-10"><button class="btn btn-primary" data-dscreen="files">Send More Files</button>
+              <button class="btn btn-secondary" data-dscreen="overview">Done</button></div>
+          </div>
+        </section>
+
+        <!-- ---------- Clipboard ---------- -->
+        <section class="d-screen" id="d-clipboard">
+          <div class="d-head">
+            <div class="row between" style="align-items:flex-start;gap:16px">
+              <div><div class="eyebrow">Clipboard</div><div class="title">Synced Clipboard</div>
+                <div class="subtitle">Copy text on one device and paste it on the other. The history stays on your network.</div></div>
+              <span class="badge badge-ok" style="padding:8px 14px"><span class="dot"></span>Synced Locally</span>
+            </div>
+          </div>
+          <div class="cols-2">
+            <div class="pane">
+              <div class="pane-head"><div class="p-title">Phone Clipboard</div><span class="badge badge-accent"><span class="dot"></span>Pixel 8 Pro</span></div>
+              <div class="pane-body" style="max-height:none;padding:14px" id="pcClipboardList"></div>
+            </div>
+            <div class="pane">
+              <div class="pane-head"><div class="p-title">PC Clipboard</div><span class="badge badge-neutral"><span class="dot"></span>This computer</span></div>
+              <div class="pane-body" style="max-height:none;padding:14px" id="deskClipboardList"></div>
+            </div>
+          </div>
+          <div class="panel" style="margin-top:18px;padding:16px">
+            <div class="row gap-12"><span class="icon-badge sm neutral" data-icon="info"></span>
+              <div class="small muted grow">Clipboard items are synced in memory only. Nothing is written to a server and nothing leaves your Wi-Fi network.</div>
+              <span class="badge badge-ok"><span class="dot"></span>Local only</span></div>
+          </div>
+        </section>
+
+        <!-- ---------- Remote keyboard ---------- -->
+        <section class="d-screen" id="d-keyboard">
+          <div class="d-head">
+            <div class="row gap-14"><span class="icon-badge lg" data-icon="keyboard"></span>
+              <div><div class="eyebrow">Keyboard</div><div class="title">Type on your computer using your phone</div>
+                <div class="subtitle">Open Remote Input on the phone and every keystroke is delivered here instantly.</div></div></div>
+          </div>
+          <div class="panel pad-lg">
+            <div class="diagram">
+              <div class="node"><span class="icon-badge lg" data-icon="phone"></span><span class="n-name">Pixel 8 Pro</span><span class="n-sub">Remote Input</span></div>
+              <div class="link-line"><span class="lbl">Wi-Fi</span><span class="dashes"></span><span class="lbl">Local</span></div>
+              <div class="node"><span class="icon-badge lg" data-icon="monitor"></span><span class="n-name">Your Computer</span><span class="n-sub">Keyboard receiver</span></div>
+            </div>
+            <hr class="divider" style="margin:8px 0 18px">
+            <div class="row between" style="margin-bottom:12px"><div class="panel-title">Received text</div><span class="badge badge-warn" id="kbState"><span class="dot"></span>Waiting for receiver</span></div>
+            <div class="field" style="height:76px;align-items:flex-start;padding:14px 16px"><span id="kbPreview" class="muted" style="font-size:14px;line-height:1.5">Start Keyboard Receiver to capture what you type on the phone…</span></div>
+            <div class="row gap-10" style="margin-top:16px">
+              <button class="btn btn-primary" id="btnKeyboardReceiver" data-icon="play" data-size="17">Start Keyboard Receiver</button>
+              <button class="btn btn-secondary" id="btnKeyboardClear">Clear</button>
+              <span class="pill-info" style="margin-left:auto"><span class="dot"></span>Latency &lt; 2 ms</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- Remote touchpad ---------- -->
+        <section class="d-screen" id="d-mouse">
+          <div class="d-head">
+            <div class="row gap-14"><span class="icon-badge lg" data-icon="pointer"></span>
+              <div><div class="eyebrow">Mouse</div><div class="title">Control your computer using your phone</div>
+                <div class="subtitle">Your phone becomes a wireless trackpad for this computer. No drivers, no cloud.</div></div></div>
+          </div>
+          <div class="cols-2">
+            <div class="panel">
+              <div class="card-head"><div class="panel-title">Virtual Trackpad Active</div><span class="badge badge-ok"><span class="dot"></span>Latency &lt; 2ms</span></div>
+              <div class="trackpad-zone" id="deskTrackpad">
+                <span class="cur" id="deskCursor" data-icon="pointer"></span>
+                <span class="tag">Move the pointer here — mirrored from Pixel 8 Pro</span>
+              </div>
+              <div class="row gap-10" style="margin-top:14px">
+                <button class="btn btn-primary grow" id="btnStartMouse">Start Mouse Control</button>
+                <button class="btn btn-secondary" data-action="desk-rightclick">Test Right Click</button>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="card-head"><div class="panel-title">Supported Gestures</div><span class="badge badge-neutral"><span class="dot"></span>Android</span></div>
+              <div class="gesture-list">
+                <div class="gesture-row"><span class="g-key">Left Click</span><span class="small grow">Tap once with one finger</span><span class="faint" data-icon="chevronRight" data-size="16"></span></div>
+                <div class="gesture-row"><span class="g-key">Right Click</span><span class="small grow">Tap once with two fingers</span><span class="faint" data-icon="chevronRight" data-size="16"></span></div>
+                <div class="gesture-row"><span class="g-key">Scroll Page</span><span class="small grow">Drag with two fingers</span><span class="faint" data-icon="chevronRight" data-size="16"></span></div>
+                <div class="gesture-row"><span class="g-key">Drag &amp; Drop</span><span class="small grow">Enable Drag Lock on the phone</span><span class="faint" data-icon="chevronRight" data-size="16"></span></div>
+              </div>
+              <div class="row gap-10" style="margin-top:16px"><span class="icon-badge sm neutral" data-icon="lock"></span>
+                <div class="small muted grow">Pointer events travel directly to this machine over Wi-Fi Direct.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- Screen share (new) ---------- -->
+        <section class="d-screen" id="d-screen" data-ss="idle">
+          <div class="d-head">
+            <div class="row between" style="align-items:flex-start;gap:16px">
+              <div><div class="eyebrow">Screen</div><div class="title">Android screen on your computer</div>
+                <div class="subtitle">Mirror the phone display in this window. The video stream stays on your local network.</div></div>
+              <span class="badge badge-accent" style="padding:8px 14px"><span class="dot"></span>New · Local only</span>
+            </div>
+          </div>
+
+          <!-- waiting -->
+          <div class="ss-state ss-idle">
+            <div class="panel pad-lg">
+              <div class="ss-waiting">
+                <div>
+                  <div class="panel-title" style="font-size:19px">View your Android screen on this computer</div>
+                  <p class="muted" style="margin-top:10px;max-width:430px">Start Screen Share on your phone to see it here. Everything stays on your local network.</p>
+                  <div class="list-rows" style="margin-top:18px">
+                    <div class="gesture-row"><span class="g-key">1</span><span class="small grow">Open Link on Pixel 8 Pro</span></div>
+                    <div class="gesture-row"><span class="g-key">2</span><span class="small grow">Tap <b>Screen Share</b> in Tools</span></div>
+                    <div class="gesture-row"><span class="g-key">3</span><span class="small grow">Accept the Android capture prompt</span></div>
+                  </div>
+                  <div class="row gap-10" style="margin-top:18px">
+                    <button class="btn btn-primary" data-action="ss-live" data-icon="play" data-size="17">Simulate incoming stream</button>
+                    <span class="pill-info"><span class="dot"></span>Waiting for device…</span>
+                  </div>
+                </div>
+                <div style="display:grid;place-items:center">
+                  <div class="diagram" style="padding:0">
+                    <div class="node"><span class="icon-badge lg" data-icon="phone"></span><span class="n-name">Pixel 8 Pro</span><span class="n-sub">Screen capture</span></div>
+                    <div class="link-line"><span class="lbl">Wi-Fi Direct</span><span class="dashes"></span><span class="lbl">Encrypted</span></div>
+                    <div class="node"><span class="icon-badge lg" data-icon="monitor"></span><span class="n-name">This window</span><span class="n-sub">Live view</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- live -->
+          <div class="ss-state ss-live">
+            <div class="panel pad-lg">
+              <div class="ss-live-wrap">
+                <div class="phone-frame">
+                  <span class="pf-notch"></span>
+                  <span class="badge badge-live pf-live"><span class="dot"></span>Live</span>
+                  <div class="pf-screen">
+                    <div class="pf-bar"><span>9:41</span><span>Link</span><span>84%</span></div>
+                    <div class="pf-body">
+                      <div class="row between" style="align-items:center"><span style="font-size:13px;font-weight:700">Screen Share</span><span class="pf-dot"></span></div>
+                      <div class="pf-card"></div>
+                      <div class="pf-row"><span class="pf-card grow" style="height:64px"></span><span class="pf-card grow" style="height:64px"></span></div>
+                      <div class="pf-card" style="height:34px"></div>
+                      <div class="bar thin" style="background:rgba(255,255,255,.16)"><i style="width:58%"></i></div>
+                      <div class="bar thin" style="background:rgba(255,255,255,.16)"><i style="width:34%;background:#8FBF8B"></i></div>
+                      <div class="pf-card" style="margin-top:auto;height:38px"></div>
+                    </div>
+                    <div class="pf-meta"><div class="row between"><span>Sharing to this computer</span><span id="ssElapsed">00:00</span></div></div>
+                  </div>
+                </div>
+                <div class="ss-panel">
+                  <div class="row between"><div class="panel-title">Pixel 8 Pro · live screen</div>
+                    <span class="badge badge-ok"><span class="dot"></span>On your Wi-Fi</span></div>
+                  <div class="ss-kv">
+                    <div class="stat-box" style="padding:13px"><div class="k">Latency</div><div class="v" id="ssLatency" style="font-size:19px">38 ms</div></div>
+                    <div class="stat-box" style="padding:13px"><div class="k">Frame rate</div><div class="v" id="ssFps" style="font-size:19px">30 fps</div></div>
+                    <div class="stat-box" style="padding:13px"><div class="k">Resolution</div><div class="v" id="ssRes" style="font-size:19px">1080p</div></div>
+                    <div class="stat-box" style="padding:13px"><div class="k">Bitrate</div><div class="v" id="ssBitrate" style="font-size:19px">6.2 Mbps</div></div>
+                  </div>
+                  <div>
+                    <div class="tiny upper faint bold" style="margin-bottom:8px">Stream quality</div>
+                    <div class="seg" id="ssQuality">
+                      <button data-q="Low">Low</button><button data-q="Balanced" class="active">Balanced</button><button data-q="High">High</button>
+                    </div>
+                  </div>
+                  <div class="ss-toolbar">
+                    <button class="btn btn-secondary btn-sm" data-action="ss-fullscreen" data-icon="maximize" data-size="15">Fullscreen</button>
+                    <button class="btn btn-secondary btn-sm" data-action="ss-screenshot" data-icon="crop" data-size="15">Screenshot</button>
+                    <button class="btn btn-danger btn-sm" data-action="ss-stop" data-icon="stop" data-size="15">Stop</button>
+                  </div>
+                  <div class="row between"><span class="tiny muted">Stream never leaves your local network</span>
+                    <button class="link tiny" data-action="ss-error">Simulate connection drop</button></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- interrupted -->
+          <div class="ss-state ss-error">
+            <div class="panel pad-lg">
+              <div class="err-banner" style="margin-bottom:18px">
+                <span class="spinner-dot"></span>
+                <div class="grow"><div class="bold">Screen share interrupted — Reconnecting...</div>
+                  <div class="small" style="color:#8A4A3C;margin-top:3px">The phone stopped sending frames. Link is trying to restore the local stream.</div></div>
+                <span class="badge badge-err"><span class="dot"></span>Attempt 2 of 5</span>
+              </div>
+              <div class="ss-live-wrap" style="opacity:.5;filter:grayscale(.35)">
+                <div class="phone-frame"><span class="pf-notch"></span>
+                  <div class="pf-screen"><div class="pf-bar"><span>9:41</span><span>Link</span><span>—</span></div>
+                    <div class="pf-body"><div class="pf-card" style="height:70px"></div><div class="pf-card"></div>
+                      <div class="row" style="justify-content:center;margin-top:auto;color:#8E857B;font-size:11px">Stream paused</div></div></div>
+                </div>
+                <div class="ss-panel">
+                  <div class="panel-title">Last known state</div>
+                  <div class="ss-kv">
+                    <div class="stat-box" style="padding:13px"><div class="k">Latency</div><div class="v" style="font-size:19px">—</div></div>
+                    <div class="stat-box" style="padding:13px"><div class="k">Frame rate</div><div class="v" style="font-size:19px">0 fps</div></div>
+                  </div>
+                  <div class="row gap-10"><button class="btn btn-primary" data-action="ss-live">Reconnect Now</button>
+                    <button class="btn btn-secondary" data-action="ss-stop">Stop Sharing</button></div>
+                  <div class="small muted">Check that the phone is still on the same Wi-Fi network and that the Link notification is still visible.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- Ring phone ---------- -->
+        <section class="d-screen" id="d-ring">
+          <div class="d-head">
+            <div class="eyebrow">Ring Phone</div>
+            <div class="title">Ring Your Phone</div>
+            <div class="subtitle">Can't find your phone nearby? Force it to play a loud ringtone even if silent mode or Do Not Disturb is enabled.</div>
+          </div>
+          <div class="panel pad-lg" style="display:flex;gap:34px;align-items:center;flex-wrap:wrap">
+            <div style="display:grid;place-items:center;min-width:220px;flex:1">
+              <div class="ring-big waves" id="deskRingBig"><span data-icon="bell"></span></div>
+            </div>
+            <div class="grow" style="min-width:320px;display:flex;flex-direction:column;gap:14px">
+              <div class="row between"><div class="panel-title" id="deskRingTitle">Ready to ring</div><span class="badge badge-warn"><span class="dot"></span>Do Not Disturb bypass</span></div>
+              <div class="small muted" id="deskRingStatus">Press the button below to play the alert on Pixel 8 Pro.</div>
+              <div class="row between tiny upper faint bold"><span>Alert volume</span><span id="deskRingVolLabel">100%</span></div>
+              <input class="slider" type="range" min="0" max="100" value="100" id="deskRingVol" aria-label="Ring volume">
+              <div class="row gap-10"><button class="btn btn-primary" id="btnRingPhone" data-icon="bell" data-size="17">Ring Phone</button>
+                <button class="btn btn-secondary" id="btnStopRinging">Stop Ringing</button></div>
+              <span class="pill-info"><span class="dot"></span>Your phone will ring at full volume</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---------- Settings ---------- -->
+        <section class="d-screen" id="d-settings">
+          <div class="d-head"><div class="eyebrow">Settings</div><div class="title">Preferences</div>
+            <div class="subtitle">Link 1.0.0 · everything below is stored locally on this computer.</div></div>
+          <div class="set-grid" id="deskSettings"></div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/desktop.js"></script>
+</body>
+</html>
