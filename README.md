@@ -36,6 +36,14 @@ flutter run           # -d chrome, -d android, -d windows …
 flutter build web     # or: flutter build apk
 ```
 
+**SDK compatibility.** The project only depends on the Flutter SDK itself, and the Dart
+constraint is deliberately wide (`>=3.8.0 <4.0.0`). It is verified on both **Flutter 3.44.9 /
+Dart 3.12.2** and **Flutter 3.47.7 / Dart 3.13.5** (`flutter pub get`, `flutter analyze`,
+`flutter test`, `flutter build web`). If `flutter pub get` reports a version-solving error,
+your Flutter is older than 3.32 (Dart 3.8): run `flutter upgrade`, or widen the constraint
+further. `pubspec.lock` is not committed on purpose — it is regenerated for whatever SDK you
+use.
+
 Both shells share one `LinkController`, so the phone and the computer always show the same
 state — exactly like the *Sync both* button of the HTML hub. Settings → **Prototype** in either
 shell jumps between the four connection states (and can simulate a failed pairing).
