@@ -187,24 +187,27 @@ body.desktop:not(.in-frame) .win{box-shadow:0 40px 90px rgba(30,24,20,.42),0 0 0
 .ss-waiting{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:center}
 .ss-live-wrap{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:start}
 .phone-frame{
-  position:relative;width:266px;padding:11px;background:#2A2420;border-radius:34px;
+  position:relative;width:202px;padding:9px;background:#2A2420;border-radius:30px;
   box-shadow:0 18px 40px rgba(42,36,32,.3),inset 0 0 0 2px #443B33;
 }
-.phone-frame .pf-notch{position:absolute;top:19px;left:50%;transform:translateX(-50%);width:64px;height:7px;border-radius:999px;background:#12100E;z-index:3}
-.phone-frame .pf-screen{position:relative;background:#1F1B18;border-radius:25px;overflow:hidden;aspect-ratio:9/19.2;display:flex;flex-direction:column}
-.phone-frame .pf-bar{display:flex;align-items:center;justify-content:space-between;padding:9px 14px 5px;color:#EDE6DC;font-size:10px;font-weight:650}
+.phone-frame .pf-notch{position:absolute;top:15px;left:50%;transform:translateX(-50%);width:52px;height:6px;border-radius:999px;background:#12100E;z-index:3}
+.phone-frame .pf-screen{position:relative;background:#1F1B18;border-radius:22px;overflow:hidden;aspect-ratio:9/19.2;display:flex;flex-direction:column}
+.phone-frame .pf-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 11px 4px;color:#EDE6DC;font-size:9px;font-weight:650}
 .phone-frame .pf-body{flex:1;padding:8px 13px 14px;display:flex;flex-direction:column;gap:9px;color:#EDE6DC}
 .phone-frame .pf-card{background:rgba(255,255,255,.1);border-radius:11px;height:46px}
 .phone-frame .pf-row{display:flex;gap:8px}
 .phone-frame .pf-dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
-.phone-frame .pf-live{position:absolute;top:16px;left:16px;z-index:4}
+.phone-frame .pf-live{position:absolute;top:12px;left:12px;z-index:4}
 .phone-frame .pf-meta{
-  position:absolute;left:11px;right:11px;bottom:11px;padding:9px 12px;border-radius:0 0 25px 25px;
-  background:linear-gradient(transparent,rgba(16,13,11,.9));color:#F2ECE3;font-size:10.5px;z-index:4;
+  position:absolute;left:9px;right:9px;bottom:9px;padding:7px 10px;border-radius:0 0 22px 22px;
+  background:linear-gradient(transparent,rgba(16,13,11,.9));color:#F2ECE3;font-size:9px;z-index:4;
 }
 .ss-panel{display:flex;flex-direction:column;gap:14px}
 .ss-kv{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .ss-toolbar{display:flex;gap:10px;flex-wrap:wrap}
+.ss-error .phone-frame{width:150px;padding:7px;border-radius:24px}
+.ss-error .phone-frame .pf-screen{border-radius:18px}
+.ss-error .phone-frame .pf-bar{font-size:8px;padding:6px 8px 3px}
 .err-banner{
   display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:var(--r-lg);
   background:var(--err-bg);border:1px solid #EFCFC8;color:var(--err);

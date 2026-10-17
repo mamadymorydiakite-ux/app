@@ -188,6 +188,8 @@ body.mobile:not(.in-frame) .phone{border-radius:42px;box-shadow:0 30px 70px rgba
 .tp-ripple{position:absolute;width:56px;height:56px;margin:-28px 0 0 -28px;border-radius:50%;background:rgba(221,91,53,.28);pointer-events:none;animation:ripple .55s ease-out forwards}
 .tp-ripple.right{background:rgba(76,140,78,.26)}
 .tp-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.tp-stats.three{grid-template-columns:1fr 1fr 1fr}
+.tp-stats.three .stat-chip .v{font-size:13px}
 .stat-chip{background:var(--card);border:1px solid var(--border);border-radius:var(--r-md);padding:10px 12px;box-shadow:var(--shadow-sm)}
 .stat-chip .k{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
 .stat-chip .v{font-size:15px;font-weight:750;margin-top:2px}
@@ -202,7 +204,7 @@ body.mobile:not(.in-frame) .phone{border-radius:42px;box-shadow:0 30px 70px rgba
 
 /* ---------- Screen share ---------- */
 .live-preview{
-  position:relative;border-radius:20px;overflow:hidden;background:#221E1B;aspect-ratio:9/17.5;
+  position:relative;width:190px;height:344px;margin:0 auto;border-radius:22px;overflow:hidden;background:#221E1B;
   border:1px solid #3A332E;box-shadow:var(--shadow);display:grid;place-items:center;
 }
 .live-badge{position:absolute;top:12px;left:12px;z-index:3}
