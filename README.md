@@ -5,7 +5,56 @@ Wi-Fi network. Everything is 100 % offline: no account, no cloud, no internet se
 remote database. Data never leaves the two devices — it works even when the local network has
 no internet access.
 
-This repository contains a **clickable, high-fidelity mockup** of both applications:
+This repository contains **two implementations of the same interactive mockup**:
+
+| Implementation | Folder | What it is |
+| --- | --- | --- |
+| Flutter (Dart) app | `app/` | The real cross-platform app: Android phone shell + Windows desktop shell, all screens and interactions, 100 % offline. **Recommended.** |
+| HTML/CSS/JS mockup | `index.html`, `mobile.html`, `desktop.html`, `assets/` | The original browser prototype of the very same design. |
+
+## Flutter app (`app/`)
+
+Built with the Flutter SDK only — no third-party packages, no network calls, no analytics.
+The Outfit typeface is bundled in `app/assets/fonts/`, so the app renders identically with no
+internet connection.
+
+| Path | What it is |
+| --- | --- |
+| `app/lib/main.dart` | Hub: shows the phone (390 × 844) and the desktop window (1100 × 700) side by side, or one at a time on small screens. |
+| `app/lib/theme.dart` | Design system: palette, radii, shadows, typography (`Outfit`). |
+| `app/lib/state/link_controller.dart` | Single source of truth shared by both shells: connection state machine (`disconnected → connecting → connected → error`), transfers, clipboard, devices, settings, screen share. |
+| `app/lib/widgets/` | Shared UI kit: cards, pill buttons, status badges, tabs, progress bars, spinners, prototype state switcher. |
+| `app/lib/mobile/` | Android shell: bottom navigation (Home, Files, Clipboard, Tools, Settings) and all phone screens. |
+| `app/lib/desktop/` | Windows shell: sidebar (Overview, Files, Clipboard, Keyboard, Mouse, Screen, Ring Phone, Settings) and all desktop screens. |
+| `app/test/link_app_test.dart` | 14 tests: state machine, mobile journey, desktop journey, screen-share flow, design system. |
+
+```bash
+cd app
+flutter pub get
+flutter test          # 14 tests
+flutter run           # -d chrome, -d android, -d windows …
+flutter build web     # or: flutter build apk
+```
+
+Both shells share one `LinkController`, so the phone and the computer always show the same
+state — exactly like the *Sync both* button of the HTML hub. Settings → **Prototype** in either
+shell jumps between the four connection states (and can simulate a failed pairing).
+
+### Behaviour
+
+* Full navigation in both apps (bottom bar / sidebar), including back links on every sub-screen.
+* State machine — **disconnected → connecting → connected → error** — driven by scanning the QR
+  code, entering an IP, retrying, cancelling or disconnecting.
+* Animated progress bars, connection spinner, pulsing `LIVE` badge, scan line, ringing waves,
+  live trackpad and keyboard mirroring.
+* Interactive switches, tabs, segmented quality control, sliders and a working trackpad.
+* “Everything is local” is reinforced everywhere: `LOCAL` badge, *Local Connection Only*,
+  *No internet required*, *Synced locally*, *Wi-Fi Direct*.
+
+## HTML/CSS/JS mockup
+
+No build step, no dependencies — open `index.html` in a browser (or `mobile.html` /
+`desktop.html` directly).
 
 | File | What it is |
 | --- | --- |
